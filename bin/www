@@ -1,0 +1,112 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+const http = require('http');
+
+require('dotenv').config()
+
+const logger=require('../lib/logger')
+
+/**
+ * Normalize a port into a number.
+ */
+
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  return port; // NaN or number returned;
+}
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+const port = normalizePort(process.env.PORT || '3000');
+const admin_port = process.env.ADMIN_PORT? normalizePort(process.env.ADMIN_PORT) : port + 1;
+const listening_address = process.env.LISTENING_ADDR || '0.0.0.0';
+
+/**
+ * Create HTTP server.
+ */
+const app = require('../app');
+app.set('port', port);
+
+const server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port, listening_address);
+server.on('error', onError(port));
+server.on('listening', onListening(server));
+
+/**
+ * Create HTTP server for admin app.
+ */
+const admin_app = require('../app-admin');
+
+admin_app.set('port', admin_port);
+
+/**
+ * Create HTTP server.
+ */
+
+const admin_server = http.createServer(admin_app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+admin_server.listen(admin_port, listening_address);
+admin_server.on('error', onError(admin_port));
+admin_server.on('listening', onListening(admin_server));
+
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(port) {
+  const onErrorFunc = function(error) {
+	  if (error.syscall !== 'listen') {
+	    throw error;
+	  }
+	
+	  const bind = typeof port === 'string'
+	    ? 'Pipe ' + port
+	    : 'Port ' + port;
+	
+	  // handle specific listen errors with friendly messages
+	  switch (error.code) {
+	    case 'EACCES':
+	      logger.error(bind + ' requires elevated privileges');
+	      process.exit(1);
+	      break;
+	    case 'EADDRINUSE':
+	      logger.error(bind + ' is already in use');
+	      process.exit(1);
+	      break;
+	    default:
+	      throw error;
+	  }
+  }
+  return onErrorFunc;
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening(server) {
+  const onListeningFunc = function() {
+	  const addr = server.address();
+	  const bind = typeof addr === 'string'
+	    ? 'pipe ' + addr
+	    : addr.address + ':' + addr.port;
+	  logger.debug('Listening on ' + bind);
+  }
+  return onListeningFunc;
+}

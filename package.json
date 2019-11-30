@@ -1,0 +1,27 @@
+{
+  "name": "lka",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "DEBUG=express:*; nodemon ./bin/www",
+    "windevstart": "set DEBUG=express:* & nodemon ./bin/www"
+  },
+  "dependencies": {
+    "app-root-path": "^2.2.1",
+    "async": "^2.6.2",
+    "aws-sdk": "^2.521.0",
+    "cookie-parser": "~1.4.3",
+    "dotenv": "^8.0.0",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "@hicoder/express-core": "0.7.201",
+    "mongoose": "^5.2.15",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
