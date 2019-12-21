@@ -15,13 +15,17 @@
     "dotenv": "^8.0.0",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
-    "@hicoder/express-core": "0.7.201",
+    "@hicoder/express-emailing": "0.8.30",
+    "@hicoder/express-auth-app": "0.8.30",
+    "@hicoder/express-auth-server": "0.8.30",
+    "@hicoder/express-file-server": "0.8.30",
+    "@hicoder/express-core": "0.8.30",
     "mongoose": "^5.2.15",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.19.4"
   }
 }

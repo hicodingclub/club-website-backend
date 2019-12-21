@@ -27,43 +27,51 @@ const port = normalizePort(process.env.PORT || '3000');
 const admin_port = process.env.ADMIN_PORT? normalizePort(process.env.ADMIN_PORT) : port + 1;
 const listening_address = process.env.LISTENING_ADDR || '0.0.0.0';
 
-/**
- * Create HTTP server.
- */
-const app = require('../app');
-app.set('port', port);
 
-const server = http.createServer(app);
+function createPubServer() {
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+  /**
+   * Create HTTP server.
+   */
+  const app = require('../app');
+  app.set('port', port);
 
-server.listen(port, listening_address);
-server.on('error', onError(port));
-server.on('listening', onListening(server));
+  const server = http.createServer(app);
 
-/**
- * Create HTTP server for admin app.
- */
-const admin_app = require('../app-admin');
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
 
-admin_app.set('port', admin_port);
+  server.listen(port, listening_address);
+  server.on('error', onError(port));
+  server.on('listening', onListening(server));
 
-/**
- * Create HTTP server.
- */
+}
 
-const admin_server = http.createServer(admin_app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+function createAdmServer() {
 
-admin_server.listen(admin_port, listening_address);
-admin_server.on('error', onError(admin_port));
-admin_server.on('listening', onListening(admin_server));
+  /**
+   * Create HTTP server for admin app.
+   */
+  const admin_app = require('../app-admin');
 
+  admin_app.set('port', admin_port);
+
+  /**
+   * Create HTTP server.
+   */
+
+  const admin_server = http.createServer(admin_app);
+
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+  admin_server.listen(admin_port, listening_address);
+  admin_server.on('error', onError(admin_port));
+  admin_server.on('listening', onListening(admin_server));
+}
 
 /**
  * Event listener for HTTP server "error" event.
@@ -110,3 +118,11 @@ function onListening(server) {
   }
   return onListeningFunc;
 }
+
+setTimeout( () => {
+  createPubServer();
+}, 100);
+
+setTimeout( () => {
+  createAdmServer();
+}, 5000);

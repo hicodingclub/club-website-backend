@@ -11,10 +11,63 @@ require('./db');
 
 const meanRestExpress = require('@hicoder/express-core');
 
-// Insert your own model definition here.
-// Example:
+// setup emailing
+const { GetEmailingManageRouter, MddsEmailer } = require('@hicoder/express-emailing');
+const awsConfFile = path.join(appRootPath.toString(), process.env.AWS_CONFIG_FILE_NAME||'.aws.conf.json');
+const emailer = new MddsEmailer(awsConfFile);
+const emailInfoForAuth = {
+  serverUrl: process.env.ADMIN_SERVER_URL || 'http://localhost:3001',
+  serverUrlPasswordReset: process.env.ADMIN_PASSWD_RESET_URL || 'http://localhost:3001/auth/reset/',
+}
+
+//for auth client
+const authApp = require('@hicoder/express-auth-app');
+const authFuncs = authApp.authFuncs;
+//for auth server
+const authServer = require('@hicoder/express-auth-server');
+const authAccountDef = authServer.authAccountDef;
+const option = {authz: 'role'}; // admin role based authorization
+const authRouter = authServer.GetDefaultAuthnRouter(authAccountDef, option);
+authRouter.setEmailer(emailer, emailInfoForAuth); // set the emailer instance for sending emails
+
+const authzAccessRouter = authServer.GetDefaultAccessManageRouter('Access', authFuncs); // manage public access module
+const authzRolesRouter = authServer.GetDefaultRolesManageRouter('Roles', authFuncs); // manage admin roles module
+authzRolesRouter.setEmailer(emailer, {});
+
+const defaultUserDef = authServer.authUserDef;
+const usersRouter = meanRestExpress.RestRouter(defaultUserDef, 'Users', authFuncs);
+usersRouter.setEmailer(emailer, {});
+
+// for Email Template models
+const emailingRouter = GetEmailingManageRouter("Emailing", authFuncs);
+
+// for academics models
 // const academicsDbDefinition = require('./models/academics/index');
-// const academicsRouter = meanRestExpress.RestRouter(academicsDbDefinition, 'Academics');
+// const academicsRouter = meanRestExpress.RestRouter(academicsDbDefinition, 'Academics', authFuncs);
+// academicsRouter.setEmailer(emailer, {}); // set the emailer instance for sending emails
+
+// for public models
+// const publicInfoDbDefinition = require('./models/publicInfo/index');
+// const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
+
+// file server
+const fileSvr = require('@hicoder/express-file-server');
+const defaultAdminSysDef = fileSvr.sampleAdminSysDef;
+const fileSOption = {
+  storage: 'fs',
+  directory: path.join(__dirname, 'storage', 'uploads'),
+  linkRoot: '/api/files', // link = linkRoot + '/download' - download needs to be enabled.
+}
+const dbSOption = {
+  storage: 'db',
+  linkRoot: '/api/files',   // link = linkRoot + '/download' - download needs to be enabled.
+}
+const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
+
+// Authorization App Client. Call it after all meanRestExpress resources are generated.
+const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates']; // the modules that manages
+// pass in authzRolesRouter so authApp can upload the managed role moduoes to authzRolesRouter
+authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, {'roleModules': manageModule});
 
 const app = express();
 
@@ -30,9 +83,15 @@ app.use(cookieParser());
 //app.use('/', indexRouter);
 app.use(express.static(path.join(__dirname, 'public-admin')));
 
-// insert your routers here
-// Example:
 // app.use('/api/academics', academicsRouter);
+// app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/files', fileSvrRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/roles', authzRolesRouter);
+app.use('/api/access', authzAccessRouter);
+app.use('/api/emailing', emailingRouter);
+
+app.use('/api/auth', authRouter);
 
 // fall back to index.html
 app.get(/.*/, function(req, res, next) {
