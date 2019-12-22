@@ -47,8 +47,8 @@ const emailingRouter = GetEmailingManageRouter("Emailing", authFuncs);
 // academicsRouter.setEmailer(emailer, {}); // set the emailer instance for sending emails
 
 // for public models
-// const publicInfoDbDefinition = require('./models/publicInfo/index');
-// const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
+const publicInfoDbDefinition = require('./models/publicInfo/index');
+const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
 
 // file server
 const fileSvr = require('@hicoder/express-file-server');
@@ -84,7 +84,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public-admin')));
 
 // app.use('/api/academics', academicsRouter);
-// app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/publicinfo', publicInfoRouter);
 app.use('/api/files', fileSvrRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/roles', authzRolesRouter);

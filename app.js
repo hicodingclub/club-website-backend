@@ -37,8 +37,8 @@ const usersRouter = meanRestExpress.RestRouter(defaultUserDef, 'Users', authFunc
 // const academicsRouter = meanRestExpress.RestRouter(academicsDbDefinition, 'Academics', authFuncs);
 
 //for public models
-// const publicInfoDbDefinition = require('./models/publicInfo/index-public');
-// const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
+const publicInfoDbDefinition = require('./models/publicInfo/index-public');
+const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
 
 //file server
 const fileSvr = require('@hicoder/express-file-server');
@@ -78,7 +78,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/api/academics', academicsRouter);
-// app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/publicinfo', publicInfoRouter);
 app.use('/api/files', fileSvrRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
