@@ -61,10 +61,10 @@ typings/
 .next
 
 #directory for public
-public
+#public
+#public-admin
 package-lock.json
 front-end/package-lock.json
-public-admin
 
 # directory .idea
 .idea/*
