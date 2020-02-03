@@ -59,7 +59,7 @@ const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFun
 const authzAccessRouter = authServer.GetDefaultAccessManageRouter('Internal-Access', authFuncs); // public access module
 
 //Authorization App Client. Call it after all meanRestExpress resources are generated.
-const publicModules = ['Users', 'Files']; // the modules that for public access
+const publicModules = ['Users', 'Files', 'PublicInfo']; // the modules that for public access
 //pass in authzAccessRouter so authApp can upload the managed role modules to authzAccessRouter
 authApp.run('local', 'app-key', 'app-secrete', authzAccessRouter, {'accessModules': publicModules});
 
