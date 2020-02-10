@@ -18,6 +18,7 @@ const emailer = new MddsEmailer(awsConfFile);
 const emailInfoForAuth = {
   serverUrl: process.env.ADMIN_SERVER_URL || 'http://localhost:3001',
   serverUrlPasswordReset: process.env.ADMIN_PASSWD_RESET_URL || 'http://localhost:3001/auth/reset/',
+  serverUrlRegVerification: process.env.REGISTRATION_VERIFICATION_URL || 'http://localhost:3001/auth/regverification/',
 }
 
 //for auth client
@@ -26,7 +27,10 @@ const authFuncs = authApp.authFuncs;
 //for auth server
 const authServer = require('@hicoder/express-auth-server');
 const authAccountDef = authServer.authAccountDef;
-const option = {authz: 'role'}; // admin role based authorization
+const option = {
+  authz: 'role',  // admin role based authorization
+  registerEmailVerification: false,
+};
 const authRouter = authServer.GetDefaultAuthnRouter(authAccountDef, option);
 authRouter.setEmailer(emailer, emailInfoForAuth); // set the emailer instance for sending emails
 

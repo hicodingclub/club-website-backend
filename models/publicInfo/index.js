@@ -5,12 +5,14 @@ let generalInfoDef = require('./generalInfo-admin');
 let keyNoteDef = require('./keynote-admin');
 let faqDef = require('./faq-admin');
 let articleDef = require('./article-admin');
+let pageDef = require('./page-admin');
 const schemas = {
   'Event': eventDef,
   "Article": articleDef,
   'Faq': faqDef,
   'GeneralInfo': generalInfoDef,
   'KeyNote': keyNoteDef,
+  'Page': pageDef,
 };
 
 const config = {

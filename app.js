@@ -19,6 +19,7 @@ const emailer = new MddsEmailer(awsConfFile);
 const emailInfoForAuth = {
   serverUrl: process.env.SERVER_URL || 'http://localhost:3000',
   serverUrlPasswordReset: process.env.PASSWD_RESET_URL || 'http://localhost:3000/auth/reset/',
+  serverUrlRegVerification: process.env.REGISTRATION_VERIFICATION_URL || 'http://localhost:3000/auth/regverification/',
 }
 
 // for auth client
@@ -27,7 +28,10 @@ const authFuncs = authApp.authFuncs;
 // for auth server
 const authServer = require('@hicoder/express-auth-server');
 const defaultUserDef = authServer.authUserDef;
-const option = {authz: 'group'}; // user group based authorization
+const option = {
+  authz: 'group',  // user group based authorization
+  registerEmailVerification: true,
+};
 const authRouter = authServer.GetDefaultAuthnRouter(defaultUserDef, option);
 authRouter.setEmailer(emailer, emailInfoForAuth); // set the emailer instance for sending emails
 const usersRouter = meanRestExpress.RestRouter(defaultUserDef, 'Users', authFuncs);

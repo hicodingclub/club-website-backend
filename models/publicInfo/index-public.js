@@ -3,12 +3,14 @@ let generalInfoDef = require('./generalInfo-public');
 let keyNoteDef = require('./keynote-public');
 let faqDef = require('./faq-public');
 let articleDef = require('./article-public');
+let pageDef = require('./page-public');
 const schemas = {
   'GeneralInfo': generalInfoDef,
   'Faq': faqDef,
   'Event': eventDef,
   'KeyNote': keyNoteDef,
   'Article': articleDef,
+  'Page': pageDef,
 };
 
 const config = {
