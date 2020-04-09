@@ -1,6 +1,6 @@
 const schema = require('./tutor');
 
-const brief = "name introduction photo";
+const brief = "name introduction photo specificSubjects[Tutoring Subjects]";
 const detail = "name | grade | email | phoneNumber[Phone Number] | introduction | photo | acceptGrade[Open to Grade] | availableTime[Available Time] | specificSubjects[Tutoring Subjects] ";
 const create = "name introduction email phoneNumber photo";
 const edit = "name introduction email phoneNumber photo";

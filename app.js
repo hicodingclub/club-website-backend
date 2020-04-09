@@ -45,7 +45,7 @@ const publicInfoDbDefinition = require('./models/publicInfo/index-public');
 const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
 
 // for teachforlife models
-const teachForLifeDBDefinition = require('./models/teachforlife/index');
+const teachForLifeDBDefinition = require('./models/teachforlife/index-public');
 const teachForLifeRouter = meanRestExpress.RestRouter(teachForLifeDBDefinition, 'Teachforlife', authFuncs);
 
 //file server
