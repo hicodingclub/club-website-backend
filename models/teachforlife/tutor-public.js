@@ -18,5 +18,8 @@ module.exports = {
         listType: 'grid', // table, list, or grid
         listTitle: 'Tutors',
         detailTitle: 'Tutors',
+        detailActions: [
+            ["I'm Interested in This Tutor", "/teach4life/enroll"]
+        ],
     },
 };

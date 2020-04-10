@@ -1,7 +1,9 @@
 let tutorDef = require('./tutor-admin');
+let enrollmentDef = require('./enrollment-admin');
 
 const schemas = {
     Tutor: tutorDef,
+    Enrollment: enrollmentDef,
 };
 
 const config = {

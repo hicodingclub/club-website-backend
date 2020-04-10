@@ -1,7 +1,10 @@
 let tutorDef = require('./tutor-public');
+let enrollmentDef = require('./enrollment-public');
+
 
 const schemas = {
     Tutor: tutorDef,
+    Enrollment: enrollmentDef,
 };
 
 const config = {
@@ -16,6 +19,7 @@ const config = {
 const authz = {
     'module-authz': { 'LoginUser': 'R', 'Anyone': '' },
     'Tutor': { 'LoginUser': '', 'Anyone': 'R' },
+    'Enrollemnt': { 'LoginUser': '', 'Anyone': 'C' }
 }
 
 module.exports = { schemas, config, authz };
