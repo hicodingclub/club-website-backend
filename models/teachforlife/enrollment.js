@@ -29,6 +29,7 @@ var schema = new Schema({
         required: true
     },
     notes: { type: String, textarea: true, description: 'please leave anything you want us to know' },
+    adminNotes: { type: String, textarea: true, description: 'notes for admin only' },
     tutor: { type: Schema.Types.ObjectId, ref: 'Tutor', required: true },
 }, {
     timestamps: true
