@@ -73,7 +73,7 @@ const dbSOption = {
 const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
 
 // Authorization App Client. Call it after all meanRestExpress resources are generated.
-const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'Teachforlife']; // the modules that manages
+const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'PublicInfo', 'Teachforlife']; // the modules that manages
 // pass in authzRolesRouter so authApp can upload the managed role moduoes to authzRolesRouter
 authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': manageModule });
 
