@@ -13,12 +13,12 @@ const meanRestExpress = require('@hicoder/express-core');
 
 // setup emailing
 const { GetEmailingManageRouter, MddsEmailer } = require('@hicoder/express-emailing');
-const awsConfFile = path.join(appRootPath.toString(), process.env.AWS_CONFIG_FILE_NAME||'.aws.conf.json');
+const awsConfFile = path.join(appRootPath.toString(), process.env.AWS_CONFIG_FILE_NAME || '.aws.conf.json');
 const emailer = new MddsEmailer(awsConfFile);
 const emailInfoForAuth = {
-  serverUrl: process.env.ADMIN_SERVER_URL || 'http://localhost:3001',
-  serverUrlPasswordReset: process.env.ADMIN_PASSWD_RESET_URL || 'http://localhost:3001/auth/reset/',
-  serverUrlRegVerification: process.env.REGISTRATION_VERIFICATION_URL || 'http://localhost:3001/auth/regverification/',
+    serverUrl: process.env.ADMIN_SERVER_URL || 'http://localhost:3001',
+    serverUrlPasswordReset: process.env.ADMIN_PASSWD_RESET_URL || 'http://localhost:3001/auth/reset/',
+    serverUrlRegVerification: process.env.REGISTRATION_VERIFICATION_URL || 'http://localhost:3001/auth/regverification/',
 }
 
 //for auth client
@@ -28,8 +28,8 @@ const authFuncs = authApp.authFuncs;
 const authServer = require('@hicoder/express-auth-server');
 const authAccountDef = authServer.authAccountDef;
 const option = {
-  authz: 'role',  // admin role based authorization
-  registerEmailVerification: false,
+    authz: 'role', // admin role based authorization
+    registerEmailVerification: false,
 };
 const authRouter = authServer.GetDefaultAuthnRouter(authAccountDef, option);
 authRouter.setEmailer(emailer, emailInfoForAuth); // set the emailer instance for sending emails
@@ -54,24 +54,28 @@ const emailingRouter = GetEmailingManageRouter("Emailing", authFuncs);
 const publicInfoDbDefinition = require('./models/publicInfo/index');
 const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
 
+// for teachforlife models
+const teachForLifeDBDefinition = require('./models/teachforlife/index');
+const teachForLifeRouter = meanRestExpress.RestRouter(teachForLifeDBDefinition, 'Teachforlife', authFuncs);
+
 // file server
 const fileSvr = require('@hicoder/express-file-server');
 const defaultAdminSysDef = fileSvr.sampleAdminSysDef;
 const fileSOption = {
-  storage: 'fs',
-  directory: path.join(__dirname, 'storage', 'uploads'),
-  linkRoot: '/api/files', // link = linkRoot + '/download' - download needs to be enabled.
+    storage: 'fs',
+    directory: path.join(__dirname, 'storage', 'uploads'),
+    linkRoot: '/api/files', // link = linkRoot + '/download' - download needs to be enabled.
 }
 const dbSOption = {
-  storage: 'db',
-  linkRoot: '/api/files',   // link = linkRoot + '/download' - download needs to be enabled.
+    storage: 'db',
+    linkRoot: '/api/files', // link = linkRoot + '/download' - download needs to be enabled.
 }
 const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
 
 // Authorization App Client. Call it after all meanRestExpress resources are generated.
-const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates']; // the modules that manages
+const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'Teachforlife']; // the modules that manages
 // pass in authzRolesRouter so authApp can upload the managed role moduoes to authzRolesRouter
-authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, {'roleModules': manageModule});
+authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': manageModule });
 
 const app = express();
 
@@ -79,8 +83,8 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(morgan('combined', {stream: logger.stream}));
-app.use(express.json({limit: '10mb'}));
+app.use(morgan('combined', { stream: logger.stream }));
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -88,6 +92,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public-admin')));
 
 // app.use('/api/academics', academicsRouter);
+app.use('/api/teachforlife', teachForLifeRouter);
 app.use('/api/publicinfo', publicInfoRouter);
 app.use('/api/files', fileSvrRouter);
 app.use('/api/users', usersRouter);
@@ -99,33 +104,33 @@ app.use('/api/auth', authRouter);
 
 // fall back to index.html
 app.get(/.*/, function(req, res, next) {
-  if (req.accepts('html')) {
-	  return res.sendFile(path.join(__dirname, './public-admin/index.html'));
-  } else {
-    return next();
-  }
+    if (req.accepts('html')) {
+        return res.sendFile(path.join(__dirname, './public-admin/index.html'));
+    } else {
+        return next();
+    }
 });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  const allowedErrCode = [400, 401, 403, 404];
-  if (!allowedErrCode.includes(err.status)) {
-    logger.error(err)
-  }
+    const allowedErrCode = [400, 401, 403, 404];
+    if (!allowedErrCode.includes(err.status)) {
+        logger.error(err)
+    }
 
-  // render the error page
-  res.status(err.status || 500);
+    // render the error page
+    res.status(err.status || 500);
 
-  res.render('error');
+    res.render('error');
 });
 
 module.exports = app;
