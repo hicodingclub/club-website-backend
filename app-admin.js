@@ -57,6 +57,7 @@ const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'Pub
 // for teachforlife models
 const teachForLifeDBDefinition = require('./models/teachforlife/index');
 const teachForLifeRouter = meanRestExpress.RestRouter(teachForLifeDBDefinition, 'Teachforlife', authFuncs);
+teachForLifeRouter.setEmailer(emailer, {});
 
 // file server
 const fileSvr = require('@hicoder/express-file-server');
