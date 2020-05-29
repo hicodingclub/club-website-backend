@@ -22,12 +22,15 @@ const emailInfoForAuth = {
 }
 
 //for auth client
+let option = {
+    authz: 'role', // admin role based authorization
+};
 const authApp = require('@hicoder/express-auth-app');
-const authFuncs = authApp.authFuncs;
+const authFuncs = authApp.getAuthFuncs(option);
 //for auth server
 const authServer = require('@hicoder/express-auth-server');
 const authAccountDef = authServer.authAccountDef;
-const option = {
+option = {
     authz: 'role', // admin role based authorization
     registerEmailVerification: false,
 };

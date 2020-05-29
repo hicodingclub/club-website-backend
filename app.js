@@ -23,12 +23,15 @@ const emailInfoForAuth = {
 }
 
 // for auth client
+let option = {
+    authz: 'group', // user group based authorization
+};
 const authApp = require('@hicoder/express-auth-app');
-const authFuncs = authApp.authFuncs;
+const authFuncs = authApp.getAuthFuncs(option);
 // for auth server
 const authServer = require('@hicoder/express-auth-server');
 const defaultUserDef = authServer.authUserDef;
-const option = {
+option = {
     authz: 'group', // user group based authorization
     registerEmailVerification: true,
 };
