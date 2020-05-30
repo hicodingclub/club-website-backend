@@ -19,7 +19,7 @@ module.exports = {
         listTitle: 'Tutors',
         detailTitle: 'Tutors',
         detailActions: [
-            ["I'm Interested in This Tutor", "/teach4life/enroll"]
+            ["I'm Interested in This Tutor", "/teachforlife/cust/enroll"]
         ],
     },
 };
