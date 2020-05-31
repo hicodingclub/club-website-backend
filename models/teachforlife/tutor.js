@@ -33,6 +33,8 @@ var schema = new Schema({
     availableTime: { type: String, required: true, textarea: true },
     acceptGrade: { type: String, required: true, description: 'Open to Students of the Following Grades' },
     specificSubjects: { type: String, required: true, textarea: true },
+    subjectTags: { type: [{ type: String }], required: true, textarea: false },
+
 });
 
 const validators = {

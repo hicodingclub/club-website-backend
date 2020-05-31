@@ -1,9 +1,9 @@
 const schema = require('./tutor');
 
-const brief = "name introduction photo specificSubjects[Tutoring Subjects]";
-const detail = "name | grade | email | phoneNumber[Phone Number] | introduction | photo | acceptGrade[Open to Grade] | availableTime[Available Time] | specificSubjects[Tutoring Subjects]";
-const create = "name | grade | email | phoneNumber[Phone Number] | introduction | photo | acceptGrade[Open to Grade] | availableTime[Available Time] | specificSubjects[Tutoring Subjects] ";
-const edit = "name | grade | email | phoneNumber[Phone Number] | introduction | photo | acceptGrade[Open to Grade] | availableTime[Available Time] | specificSubjects[Tutoring Subjects] ";
+const brief = "name introduction photo subjectTags";
+const detail = "name | grade | email | phoneNumber[Phone Number] | introduction | photo | acceptGrade[Open to Grade] | availableTime[Available Time] | specificSubjects[Tutoring Subjects] | subjectTags";
+const create = "name | grade | email | phoneNumber[Phone Number] | introduction | photo | acceptGrade[Open to Grade] | availableTime[Available Time] | specificSubjects[Tutoring Subjects] | subjectTags";
+const edit = "name | grade | email | phoneNumber[Phone Number] | introduction | photo | acceptGrade[Open to Grade] | availableTime[Available Time] | specificSubjects[Tutoring Subjects] | subjectTags";
 const textSearch = "name email phoneNumber";
 const index = "name";
 
@@ -17,4 +17,9 @@ module.exports = {
     mraUI: {
         listType: 'grid', // table, list, or grid
     },
+    mraBE: {
+        valueSearchFields: [
+            'subjectTags',
+        ]
+    }
 };

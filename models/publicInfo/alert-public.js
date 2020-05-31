@@ -19,4 +19,9 @@ module.exports = {
         listToDetail: 'none', // link, click, or none
         defaultListSort: { 'order': 'asc' },
     },
+    mraBE: {
+        searchObj: {
+            show: true,
+        }
+    }
 };
