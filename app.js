@@ -51,6 +51,10 @@ const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'Pub
 const teachForLifeDBDefinition = require('./models/teachforlife/index-public');
 const teachForLifeRouter = meanRestExpress.RestRouter(teachForLifeDBDefinition, 'Teachforlife', authFuncs);
 
+// for summerProgram models
+const summerProgramDBDefinition = require('./models/summerProgram/index-public');
+const summerProgramRouter = meanRestExpress.RestRouter(summerProgramDBDefinition, 'SummerProgram', authFuncs);
+
 //file server
 const fileSvr = require('@hicoder/express-file-server');
 const defaultAdminSysDef = fileSvr.sampleAdminSysDef;
@@ -70,7 +74,7 @@ const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFun
 const authzAccessRouter = authServer.GetDefaultAccessManageRouter('Internal-Access', authFuncs); // public access module
 
 //Authorization App Client. Call it after all meanRestExpress resources are generated.
-const publicModules = ['Users', 'Files', 'PublicInfo', 'Teachforlife']; // the modules that for public access
+const publicModules = ['Users', 'Files', 'PublicInfo', 'Teachforlife', 'SummerProgram']; // the modules that for public access
 //pass in authzAccessRouter so authApp can upload the managed role modules to authzAccessRouter
 authApp.run('local', 'app-key', 'app-secrete', authzAccessRouter, { 'accessModules': publicModules });
 
@@ -89,6 +93,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/api/academics', academicsRouter);
+app.use('/api/summerprogram', summerProgramRouter);
 app.use('/api/teachforlife', teachForLifeRouter);
 app.use('/api/publicinfo', publicInfoRouter);
 app.use('/api/files', fileSvrRouter);

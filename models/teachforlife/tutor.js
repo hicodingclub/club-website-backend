@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-const { validateEmail, validatePhone, emailValidate, phoneValidate } = require('./validators');
+const { validateEmail, validatePhone, emailValidate, phoneValidate } = require('../validators');
 
 var Schema = mongoose.Schema;
 

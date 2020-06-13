@@ -16,6 +16,7 @@ var schema = new Schema({
     },
     phoneNumber: {
         type: String,
+        required: true,
         validate: {
             validator: validatePhone,
             message: 'Please fill a valid phone number'
@@ -30,7 +31,6 @@ var schema = new Schema({
     },
     notes: { type: String, textarea: true, description: 'please leave anything you want us to know' },
     adminNotes: { type: String, textarea: true, description: 'notes for admin only' },
-    tutor: { type: Schema.Types.ObjectId, ref: 'Tutor', required: true },
 }, {
     timestamps: true
 });

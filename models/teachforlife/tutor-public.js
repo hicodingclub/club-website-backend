@@ -16,7 +16,7 @@ module.exports = {
     name: "Tutors",
     mraUI: {
         listType: 'grid', // table, list, or grid
-        listTitle: 'Tutors',
+        listTitle: 'Click a Tutor to See More Information and Sign Up!',
         detailTitle: 'Tutors',
         detailActions: [
             ["I'm Interested in This Tutor", "/teachforlife/cust/enroll"]
