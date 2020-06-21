@@ -14,7 +14,7 @@ const meanRestExpress = require('@hicoder/express-core');
 // setup emailing
 const { GetEmailingManageRouter, MddsEmailer } = require('@hicoder/express-emailing');
 const awsConfFile = path.join(appRootPath.toString(), process.env.AWS_CONFIG_FILE_NAME || '.aws.conf.json');
-const emailer = new MddsEmailer(awsConfFile);
+const emailer = new MddsEmailer(awsConfFile, logger);
 setTimeout( () => {emailer.startDaemon()}, 20000 );
 
 const emailInfoForAuth = {

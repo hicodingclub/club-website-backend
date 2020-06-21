@@ -54,6 +54,7 @@ const teachForLifeRouter = meanRestExpress.RestRouter(teachForLifeDBDefinition, 
 // for summerProgram models
 const summerProgramDBDefinition = require('./models/summerProgram/index-public');
 const summerProgramRouter = meanRestExpress.RestRouter(summerProgramDBDefinition, 'SummerProgram', authFuncs);
+summerProgramRouter.setEmailer(emailer, {});
 
 //file server
 const fileSvr = require('@hicoder/express-file-server');

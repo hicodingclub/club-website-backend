@@ -1,8 +1,9 @@
 let enrollmentDef = require('./spenrollment-public');
-
+let confirmationDef = require('./confirmation-public');
 
 const schemas = {
     SPEnrollment: enrollmentDef,
+    Confirmation: confirmationDef,
 };
 
 const config = {
@@ -16,7 +17,8 @@ const config = {
 
 const authz = {
     'module-authz': { 'LoginUser': 'R', 'Anyone': '' },
-    'SPEnrollment': { 'LoginUser': '', 'Anyone': 'C' }
+    'SPEnrollment': { 'LoginUser': '', 'Anyone': 'C' },
+    'Confirmation': { 'LoginUser': '', 'Anyone': 'C' },
 }
 
 const DB_CONFIG = {
