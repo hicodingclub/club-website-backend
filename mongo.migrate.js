@@ -1,6 +1,6 @@
 
 var mode="do"; // only "do" will do
-var appName = 'lka';
+var appName = 'hcc';
 var modules = {
     'auth': [
         'musers',
