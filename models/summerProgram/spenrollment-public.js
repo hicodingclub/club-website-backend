@@ -1,7 +1,8 @@
 const schema = require('./spenrollment');
+const emailer = require('./spenrollment-emailing');
 
 var brief = "name email grade status createdAt";
-var detail = "name email phoneNumber grade status notes createdAt";
+var detail = "name email";
 var create = "name email phoneNumber grade notes";
 var edit = "name email phoneNumber grade notes";
 var textSearch = "name";
@@ -15,8 +16,10 @@ module.exports = {
     views,
     name: 'Sign Up for Summer Program',
     // patch: ['muser_id'], //field is member which is already defined, so no need to patch
-    api: "C",
+    api: "CR",
     mraUI: {
+        api: "C",
+
         listType: 'table', // table, list, or grid
 
         disableListSearch: true, // not show the search bar
@@ -34,4 +37,7 @@ module.exports = {
 
         selectActionViewType: 'grid', // select extraView type: dropdown, grid, table, list
     },
+    mraBE: {
+        emailer, //email templates to create during app start up from backend.
+    }
 };

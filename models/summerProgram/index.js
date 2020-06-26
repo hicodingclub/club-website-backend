@@ -1,7 +1,9 @@
 let enrollmentDef = require('./spenrollment-admin');
+let confirmationDef = require('./confirmation-admin');
 
 const schemas = {
     SPEnrollment: enrollmentDef,
+    Confirmation: confirmationDef,
 };
 
 const config = {
