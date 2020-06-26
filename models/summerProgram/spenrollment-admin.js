@@ -15,4 +15,8 @@ module.exports = {
     views,
     name: 'Sign Up',
     api: 'LCRUDEM', //E - export
+    mraUI: {
+        listType: 'table',
+        defaultListSort: {'createdAt': 'desc'},  
+    },
 };
