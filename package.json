@@ -8,6 +8,11 @@
         "windevstart": "set DEBUG=express:* & nodemon ./bin/www"
     },
     "dependencies": {
+        "@hicoder/express-auth-app": "0.9.40",
+        "@hicoder/express-auth-server": "0.9.40",
+        "@hicoder/express-core": "0.9.40",
+        "@hicoder/express-emailing": "0.9.40",
+        "@hicoder/express-file-server": "0.9.40",
         "app-root-path": "^2.2.1",
         "async": "^2.6.2",
         "aws-sdk": "^2.521.0",
@@ -15,16 +20,11 @@
         "dotenv": "^8.0.0",
         "express": "~4.16.0",
         "http-errors": "~1.6.2",
-        "@hicoder/express-emailing": "0.9.30",
-        "@hicoder/express-auth-app": "0.9.30",
-        "@hicoder/express-auth-server": "0.9.30",
-        "@hicoder/express-file-server": "0.9.30",
-        "@hicoder/express-core": "0.9.30",
-        "mongoose": "^5.2.15",
+        "jsonwebtoken": "^8.4.0",
+        "mongoose": "^5.9.25",
         "morgan": "~1.9.0",
         "pug": "2.0.0-beta11",
-        "winston": "^3.2.1",
-        "jsonwebtoken": "^8.4.0"
+        "winston": "^3.2.1"
     },
     "devDependencies": {
         "nodemon": "^1.19.4"
