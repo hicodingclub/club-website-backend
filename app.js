@@ -64,7 +64,8 @@ summerProgramRouter.setEmailer(emailer, {});
 
 //file server
 const fileSvr = require('@hicoder/express-file-server');
-const defaultFileSysDef = fileSvr.sampleUserOwnSysDef;
+//const defaultFileSysDef = fileSvr.sampleUserOwnSysDef;
+const defaultFileSysDef = fileSvr.sampleAdminSysDef;
 const fileSOption = {
     storage: 'fs',
     directory: path.join(__dirname, 'storage', 'uploads'),
