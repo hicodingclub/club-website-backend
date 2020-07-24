@@ -26,7 +26,8 @@ const emailInfoForAuth = {
 let option = {
     authz: 'group', // user group based authorization
 };
-const authApp = require('@hicoder/express-auth-app');
+const AuthApp = require('@hicoder/express-auth-app');
+const authApp = new AuthApp();
 const authFuncs = authApp.getAuthFuncs(option);
 // for auth server
 const authServer = require('@hicoder/express-auth-server');
@@ -56,9 +57,14 @@ const summerProgramDBDefinition = require('./models/summerProgram/index-public')
 const summerProgramRouter = meanRestExpress.RestRouter(summerProgramDBDefinition, 'SummerProgram', authFuncs);
 summerProgramRouter.setEmailer(emailer, {});
 
+// for websites models
+const websitesDBDefinition = require('./models/websites/index-public');
+const websitesRouter = meanRestExpress.RestRouter(websitesDBDefinition, 'Websites', authFuncs);
+summerProgramRouter.setEmailer(emailer, {});
+
 //file server
 const fileSvr = require('@hicoder/express-file-server');
-const defaultAdminSysDef = fileSvr.sampleAdminSysDef;
+const defaultFileSysDef = fileSvr.sampleUserOwnSysDef;
 const fileSOption = {
     storage: 'fs',
     directory: path.join(__dirname, 'storage', 'uploads'),
@@ -68,14 +74,14 @@ const dbSOption = {
     storage: 'db',
     linkRoot: '/api/files', //link = linkRoot + '/download' - download needs to be enabled.
 }
-const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
+const fileSvrRouter = fileSvr.ExpressRouter(defaultFileSysDef, 'Files', authFuncs, fileSOption);
 
 // this is special: we only get the router, but will only use it internally for authApp to pass managed access modules to it.
 // there is no external routing path defined for it because we don't manage public access in public facing app.
 const authzAccessRouter = authServer.GetDefaultAccessManageRouter('Internal-Access', authFuncs); // public access module
 
 //Authorization App Client. Call it after all meanRestExpress resources are generated.
-const publicModules = ['Users', 'Files', 'PublicInfo', 'Teachforlife', 'SummerProgram']; // the modules that for public access
+const publicModules = ['Users', 'Files', 'PublicInfo', 'Teachforlife', 'SummerProgram', 'Websites']; // the modules that for public access
 //pass in authzAccessRouter so authApp can upload the managed role modules to authzAccessRouter
 authApp.run('local', 'app-key', 'app-secrete', authzAccessRouter, { 'accessModules': publicModules });
 
@@ -97,6 +103,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/summerprogram', summerProgramRouter);
 app.use('/api/teachforlife', teachForLifeRouter);
 app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/websites', websitesRouter);
+
 app.use('/api/files', fileSvrRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);

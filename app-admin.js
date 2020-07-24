@@ -27,7 +27,8 @@ const emailInfoForAuth = {
 let option = {
     authz: 'role', // admin role based authorization
 };
-const authApp = require('@hicoder/express-auth-app');
+const AuthApp = require('@hicoder/express-auth-app');
+const authApp = new AuthApp();
 const authFuncs = authApp.getAuthFuncs(option);
 //for auth server
 const authServer = require('@hicoder/express-auth-server');
@@ -69,6 +70,11 @@ const summerProgramDBDefinition = require('./models/summerProgram/index');
 const summerProgramRouter = meanRestExpress.RestRouter(summerProgramDBDefinition, 'SummerProgram', authFuncs);
 summerProgramRouter.setEmailer(emailer, {});
 
+// for websites models
+const websitesDBDefinition = require('./models/websites/index');
+const websitesRouter = meanRestExpress.RestRouter(websitesDBDefinition, 'Websites', authFuncs);
+summerProgramRouter.setEmailer(emailer, {});
+
 // file server
 const fileSvr = require('@hicoder/express-file-server');
 const defaultAdminSysDef = fileSvr.sampleAdminSysDef;
@@ -84,7 +90,8 @@ const dbSOption = {
 const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
 
 // Authorization App Client. Call it after all meanRestExpress resources are generated.
-const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'PublicInfo', 'Teachforlife', 'SummerProgram']; // the modules that manages
+const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates',
+    'PublicInfo', 'Teachforlife', 'SummerProgram', 'Websites']; // the modules that manages
 // pass in authzRolesRouter so authApp can upload the managed role moduoes to authzRolesRouter
 authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': manageModule });
 
@@ -106,6 +113,7 @@ app.use(express.static(path.join(__dirname, 'public-admin')));
 app.use('/api/teachforlife', teachForLifeRouter);
 app.use('/api/summerprogram', summerProgramRouter);
 app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/websites', websitesRouter);
 app.use('/api/files', fileSvrRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/roles', authzRolesRouter);

@@ -17,6 +17,8 @@ module.exports = {
     api: 'LCRUDM', //E - export
     mraUI: {
         listType: 'table',
-        defaultListSort: {'createdAt': 'desc'},  
+        defaultListSort: {'createdAt': 'desc'},
+
+        ownSearchStringFields: ['type'], //list of strings that should have own search field in the search area
     },
 };

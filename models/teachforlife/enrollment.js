@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const { validateEmail, validatePhone, emailValidate, phoneValidate } = require('../validators');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
     name: { type: String, required: true },
     email: {
         type: String,
