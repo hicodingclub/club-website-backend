@@ -1,4 +1,5 @@
 const schema = require('./sites');
+const zInterfaces = require('./sites-z');
 
 var brief = 'name ready enabled projectFile createdAt';
 var detail = 'name ready enabled (muser_id) createdAt updatedAt';
@@ -42,4 +43,7 @@ module.exports = {
     },
   },
   selectors: {},
+  mraBE: {
+    zInterfaces,
+  }
 };
