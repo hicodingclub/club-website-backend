@@ -1,8 +1,9 @@
 const schema = require('./sites');
 const zInterfaces = require('./sites-z');
+const {fieldMeta, selectors} = require('./sites-selectors');
 
-var brief = 'name ready enabled projectFile createdAt';
-var detail = 'name ready enabled (muser_id) createdAt updatedAt';
+var brief = 'name<siteLink> ready enabled projectFile createdAt';
+var detail = 'name<siteLink> ready enabled (muser_id) createdAt updatedAt';
 var create = 'name enabled (muser_id) (projectFile)';
 var edit = 'name<readOnly> (projectFile) enabled';
 var textSearch = 'name';
@@ -37,12 +38,8 @@ module.exports = {
     //detailActions: [["Make Payment", "/actions/pay"]],
   },
 
-  fieldMeta: {
-    readOnly: {
-        readOnly: true,
-    },
-  },
-  selectors: {},
+  fieldMeta,
+  selectors,
   mraBE: {
     zInterfaces,
   }

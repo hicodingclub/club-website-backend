@@ -1,9 +1,10 @@
 const schema = require('./sites');
+const {fieldMeta, selectors} = require('./sites-selectors');
 
-var brief = 'name ready enabled muser_id createdAt';
-var detail = 'name ready enabled projectFile muser_id<userLink> createdAt updatedAt';
+var brief = 'name<siteLink> ready enabled muser_id createdAt';
+var detail = 'name<siteLink> ready enabled projectFile muser_id<userLink> createdAt updatedAt';
 var create = 'name enabled muser_id';
-var edit = 'name<readOnly> muser_id<userLink> ready<readOnly> enabled';
+var edit = 'name<readOnly> muser_id<userLink> ready enabled';
 var textSearch = 'name';
 var index = 'name'; //let's temporarily put any field here since this schema is not referred.
 
@@ -25,29 +26,6 @@ module.exports = {
     defaultListSort: { createdAt: 'desc' },
   },
 
-  fieldMeta: {
-    readOnly: {
-      readOnly: true,
-    },
-    userLink: {
-      readOnly: true,
-
-      innerHtml: true,
-      pipe: 'MddsAnchorPipe',
-    }
-  },
-  selectors: {
-    MddsAnchorPipe: {
-      selector: 'mddsAnchor',
-      module: 'MddsCoreModule', //MddsCoreModule. Already imported. So skip it.
-      package: '@hicoder/angular-core',
-      inputs: [{
-        key: 'urlTemplate',
-        value: '/users/muser/detail/[REPLACEME]'
-      }, {
-        key: 'displayTemplate',
-        value: '[REPLACEME]'
-      }],
-    }
-  },
+  fieldMeta,
+  selectors,
 };

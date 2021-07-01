@@ -8,6 +8,7 @@ const exec = util.promisify(require('child_process').exec);
 
 // generate: request go generate size
 async function generate(req, res, next, restController) {
+    /*
     if (!req.muser) {
         return next(createError(400, 'Bad request: user unknown.'));
     }
@@ -51,6 +52,7 @@ async function generate(req, res, next, restController) {
         return next(createError(400, err.message));
     }
     console.log("build duration: ", duration);
+    */
     return res.send(['good']);
 }
 
