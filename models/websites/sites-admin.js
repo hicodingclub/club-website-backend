@@ -39,7 +39,7 @@ module.exports = {
   selectors: {
     MddsAnchorPipe: {
       selector: 'mddsAnchor',
-      module: '', //MddsCoreModule. Already imported. So skip it.
+      module: 'MddsCoreModule', //MddsCoreModule. Already imported. So skip it.
       package: '@hicoder/angular-core',
       inputs: [{
         key: 'urlTemplate',
