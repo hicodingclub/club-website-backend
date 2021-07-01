@@ -15,8 +15,23 @@ module.exports = {
   name: 'General Information',
   api: "LR",
   mraUI: {
+    listWidgets: {
+      general: {
+        views: ['list',],
+      },
+      select: {
+        views: ['list',],
+      },
+      sub: {
+        views: ['list',],
+      }
+    },
+    listWidgetTypes: {
+      general: 'general',
+      select: 'select',
+      sub: 'sub',
+    },
     detailType: 'info', //use the info view in detailed page
-    listType: 'list', // list, table, or grid
     defaultListSort: {'title': 'asc'},
     publicListFilter: {},
     homeListNumber: 3,

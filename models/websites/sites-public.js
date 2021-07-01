@@ -28,7 +28,7 @@ module.exports = {
     listTitle: 'Your Websites',
     defaultListSort: { createdAt: 'desc' },
 
-    detailActionButtons: ['Change Status', '', ''],
+    detailActionButtons: ['', '', ''],
     detailRefName: {
       // if being referenced, what name to show
     },

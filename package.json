@@ -4,15 +4,15 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "devstart": "DEBUG=express:*; nodemon ./bin/www",
+        "devstart": "DEBUG=express:*; nodemon --ignore build/ --ignore storage/ ./bin/www",
         "windevstart": "set DEBUG=express:* & nodemon ./bin/www"
     },
     "dependencies": {
-        "@hicoder/express-auth-app": "0.9.45",
-        "@hicoder/express-auth-server": "0.9.45",
-        "@hicoder/express-core": "0.9.45",
-        "@hicoder/express-emailing": "0.9.45",
-        "@hicoder/express-file-server": "0.9.45",
+        "@hicoder/express-auth-app": "0.9.59",
+        "@hicoder/express-auth-server": "0.9.59",
+        "@hicoder/express-core": "0.9.59",
+        "@hicoder/express-emailing": "0.9.59",
+        "@hicoder/express-file-server": "0.9.59",
         "app-root-path": "^2.2.1",
         "async": "^2.6.2",
         "aws-sdk": "^2.521.0",

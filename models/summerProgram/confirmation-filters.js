@@ -3,7 +3,6 @@ const createError = require('http-errors');
 const MDDS_EMAIL_TOKEN = 'this is a normal one used for mdds normal';
 
 function handleConfirmationRequest(req, res, next) {
-  console.log("====== request:", req.body);
     let body = req.body;
     if (typeof body === 'string') {
       try {
@@ -19,7 +18,6 @@ function handleConfirmationRequest(req, res, next) {
     let email;
     try {
         const decoded = jwt.verify(body.mddsEmailToken, MDDS_EMAIL_TOKEN);
-        console.log('==decoded', decoded);
         email = decoded.email;
         if (email != body.email) {
           return next(createError(400, 'Bad request. Invalid email.'));
@@ -29,7 +27,6 @@ function handleConfirmationRequest(req, res, next) {
     }
 
     req.body.email = email;
-    console.log("====== request:", req.body);
 
     return next();
 }

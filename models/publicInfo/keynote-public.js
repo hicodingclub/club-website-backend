@@ -16,8 +16,14 @@ module.exports = {
   api: 'LR',
   listWidgets: ['sld'], //home - home page list view, s: select view for pipeline/composite, d: slides list view
   mraUI: {
-    detailType: 'slide', //use the slide view in detailed page
-    listType: 'list', // list, table, or grid
+    listWidgets: {
+      'view-only': {
+        views: ['sld'],
+      },
+    },
+    listWidgetTypes: {
+      general: 'view-only',
+    },
     defaultListSort: {'title': 'asc'},
     publicListFilter: {},
     homeListNumber: 3,
